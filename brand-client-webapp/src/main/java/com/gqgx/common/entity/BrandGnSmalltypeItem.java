@@ -1,10 +1,12 @@
 package com.gqgx.common.entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "brand_gn_smalltype_item")
 public class BrandGnSmalltypeItem {
+
     /**
      * 主键
      */
@@ -292,4 +294,5 @@ public class BrandGnSmalltypeItem {
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
     }
+
 }
