@@ -65,13 +65,13 @@ public class BrandLargeTypeServiceImplTest {
         brandLargeTypeService.deleteBrandLargeType(brandLargeType);
     }
 
-    @Test
+  /*  @Test
     public void deleteBrandLargeTypeByIds() {
         Long[] ids = new Long[]{60L, 61l};
         int i = brandLargeTypeService.deleteBrandLargeTypeByIds(ids);
         System.out.println(i);
     }
-
+*/
 
     @Test
     public void findBrandLargeType() {

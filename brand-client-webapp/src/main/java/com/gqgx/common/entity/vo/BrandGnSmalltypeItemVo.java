@@ -4,6 +4,8 @@ import com.gqgx.common.entity.BrandGnSmalltypeItem;
 
 public class BrandGnSmalltypeItemVo extends BrandGnSmalltypeItem {
 
+	private static final long serialVersionUID = -9002817171754103988L;
+	
 	/**
 	 * 大类ID
 	 */

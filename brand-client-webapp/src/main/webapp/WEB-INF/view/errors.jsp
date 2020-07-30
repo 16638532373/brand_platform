@@ -7,7 +7,8 @@
 
     <meta charset="utf-8">
 
-    <title>500错误</title>
+
+    <title>H500错误</title>
     <link rel="shortcut icon" href="favicon.ico"> <link href="${cxtPath}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 
     <link href="${cxtPath}/css/style.css?v=4.1.0" rel="stylesheet">

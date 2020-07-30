@@ -17,7 +17,7 @@ public interface BrandLargeTypeService {
 
     int deleteBrandLargeType(BrandLargeType brandLargeType);
 
-    int deleteBrandLargeTypeByIds(Long[] ids);
+ /*   int deleteBrandLargeTypeByIds(Long[] ids);*/
 
     PagingResult<BrandLargeType> findBrandLargeType(BrandLargeType brandLargeType, LayuiPage page);
 

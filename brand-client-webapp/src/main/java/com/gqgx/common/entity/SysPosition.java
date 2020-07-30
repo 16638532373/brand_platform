@@ -1,14 +1,28 @@
 package com.gqgx.common.entity;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "sys_position")
 public class SysPosition {
+
+
+    //    新增字段开始
+    private static final long serialVersionUID = -6749093997114975681L;
+
+    @Transient
+    private Long sysMenuId;
+    @Transient
+    private String areaPrem;
+    @Transient
+    private String departmentName;
+//    新增字段结束
+
     /**
      * 表主键
      */
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -313,5 +327,51 @@ public class SysPosition {
      */
     public void setDataPower(String dataPower) {
         this.dataPower = dataPower == null ? null : dataPower.trim();
+    }
+
+    public Long getSysMenuId() {
+        return sysMenuId;
+    }
+
+    public void setSysMenuId(Long sysMenuId) {
+        this.sysMenuId = sysMenuId;
+    }
+
+    public String getAreaPrem() {
+        return areaPrem;
+    }
+
+    public void setAreaPrem(String areaPrem) {
+        this.areaPrem = areaPrem;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    @Override
+    public String toString() {
+        return "SysPosition{" +
+                "sysMenuId=" + sysMenuId +
+                ", areaPrem='" + areaPrem + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", id=" + id +
+                ", parentId=" + parentId +
+                ", name='" + name + '\'' +
+                ", remark='" + remark + '\'' +
+                ", departmentId=" + departmentId +
+                ", companyId=" + companyId +
+                ", recordStatus='" + recordStatus + '\'' +
+                ", updateCount=" + updateCount +
+                ", createDate=" + createDate +
+                ", creatorId=" + creatorId +
+                ", updateDate=" + updateDate +
+                ", updaterId=" + updaterId +
+                ", dataPower='" + dataPower + '\'' +
+                '}';
     }
 }

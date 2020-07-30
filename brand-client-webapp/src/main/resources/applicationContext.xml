@@ -8,25 +8,45 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
-    <!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。  -->
-    <context:component-scan base-package="com.gqgx"><!-- base-package 如果多个，用“,”分隔 -->
-        <context:exclude-filter type="regex" expression="com.gqgx.action" />
-    </context:component-scan>
+    <!-- 声明spring容器工具类 -->
+    <bean class="com.gqgx.common.springutils.Springs" lazy-init="false"></bean>
 
-
+    <!--加载数据库配置-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:brand-jdbc.properties"></property>
+    </bean>
+
+    <!-- 文件服务器配置 -->
+    <bean class="com.gqgx.common.utils.CosConfig" >
+        <property name="domain">
+            <value>https://gqgx-1256194727.cos.ap-guangzhou.myqcloud.com</value>
+        </property>
+        <property name="appId">
+            <value>1256194727</value>
+        </property>
+        <property name="secretId">
+            <value>AKIDAEB1pVjfBXjknSPRtGWbUEpJgsQqoC5n</value>
+        </property>
+        <property name="secretKey">
+            <value>eTUQEsY5RzMZaVFoBNOEwSmuBKJ6mJhv</value>
+        </property>
+        <property name="bucketName">
+            <value>gqgx-1256194727</value>
+        </property>
+        <property name="region">
+            <value>ap-guangzhou</value>
+        </property>
     </bean>
 
     <!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
 
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
         <!-- 基本属性 url、user、password -->
         <property name="url" value="${jdbc.url}" />
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
-        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
 
         <!-- 配置初始化大小、最小、最大 -->
         <property name="initialSize" value="${jdbc.initialSize}" />
@@ -48,7 +68,7 @@
         <property name="testOnReturn" value="false" />
 
         <!-- 配置监控统计拦截的filters -->
-        <!--<property name="filters" value="stat" />-->
+        <property name="filters" value="stat" />
     </bean>
 
     <!-- <bean name="scheduler" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
@@ -57,21 +77,28 @@
         <property name="configLocation" value="classpath:quartz.properties"/>
     </bean> -->
 
-    <!--SqlSessionFactoryBean为整合应用提供SqlSession对象资源-->
+    <!-- MyBatis配置 -->
+    <!--<bean id="sqlSessionFactory" class="com.gqgx.common.mybatis.SqlSessionFactoryBean">-->
+    <!--<property name="dataSource" ref="dataSource" />-->
+    <!--<property name="configLocation" value="classpath:mybatis-config-mysql.xml" />-->
+    <!--&lt;!&ndash; 需要从jar中加载GlobalMapper.xml &ndash;&gt;-->
+    <!--<property name="mapperLocations">-->
+    <!--<list>-->
+    <!--<value>classpath*:/com/gqgx/**/*Mapper.xml</value>-->
+    <!--<value>classpath*:/com/gqgx/common/dao/GlobalMapper.xml</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--</bean>-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
         <property name="configLocation" value="classpath:mybatis-config-mysql.xml"></property>
         <property name="mapperLocations">
             <list>
-                <value>classpath:mapper/*Mapper.xml</value>
+                <value>classpath*:/mapper/*Mapper.xml</value>
             </list>
         </property>
     </bean>
 
-    <!--MapperScannerConfigurer根据指定包批量扫描Mapper接口并生成实例-->
-    <!--<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-    <!--<property name="basePackage" value="com.gqgx.common.mapper"></property>-->
-    <!--</bean>-->
     <!-- 使用tk包的扫描类整合，Spring会自动查找其下的类 -->
     <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.gqgx.common.mapper" />
@@ -82,6 +109,11 @@
             </value>
         </property>
     </bean>
+
+    <!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。  -->
+    <context:component-scan base-package="com.gqgx"><!-- base-package 如果多个，用“,”分隔 -->
+        <context:exclude-filter type="regex" expression="com.gqgx.action" />
+    </context:component-scan>
 
     <!-- 开启AOP监听-->
     <aop:aspectj-autoproxy expose-proxy="true"/>
